@@ -1,2 +1,2 @@
 # odin-calculator
-ODP Project: Calculator
+My repo for the ODP project "Calculator".
