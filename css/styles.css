@@ -4,13 +4,15 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: beige;
+    background-color: #696d6e;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 button {
     flex: 1;
     font-size: 72px;
-    color: pink;
+    color: #ececec;
+    border-radius: 24px;
 }
 
 .calculator {
@@ -21,32 +23,24 @@ button {
     align-items: stretch;
     padding: 8px;
     gap: 8px;
-    background-color: aliceblue;
-    border: 4px solid black;
+    background-color: #263139;
+    border: 4px solid transparent;
     border-radius: 16px;
 }
 
 .output {
-    padding: 16px;
-    height: 64px;
+    padding: 8px 24px;
+    height: 96px;
     text-align: right;
-    line-height: 64px;
-    background-color: aquamarine;
-    border: 4px solid black;
-    border-radius: 8px;
-    font-size: 64px;
-}
+    line-height: 96px;
 
-.operators-row {
-    display: flex;
-    flex: 1;
-    gap: 8px;
-}
-
-.operator-button {
-    border: 2px solid black;
+    background-color: #8a8f92;
+    border: 4px solid transparent;
     border-radius: 8px;
-    background-color: blue;
+
+    font-size: 80px;
+    font-weight: bold;
+    color: #ececec;
 }
 
 .digits-row {
@@ -55,14 +49,30 @@ button {
     gap: 8px;
 }
 
-.digit-button {
-    border: 2px solid black;
-    border-radius: 8px;
-    background-color: yellow;;
+.dark-button {
+    border: 2px solid transparent;
+    background-color: #263139;
 }
 
-.control-button {
-    border: 2px solid black;
-    border-radius: 8px;
-    background-color: firebrick;
+.dark-button:hover {
+    background-color: #434b4e;
+}
+
+.light-button {
+    border: 2px solid transparent;
+    background-color: #ececec;
+    color: #263139;
+}
+
+.light-button:hover {
+    background-color: #b9b9b9;
+}
+
+.equals-button {
+    border: 2px solid transparent;
+    background-color: #e37a52;
+}
+
+.equals-button:hover {
+    background-color: #f16535;
 }
