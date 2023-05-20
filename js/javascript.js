@@ -35,4 +35,41 @@ function operate(num1, operator, num2)
     }
 }
 
+function displayNumber(number)
+{
+    if (display.textContent !== "0")
+    {
+        display.textContent += number;
+    }
+    else
+    {
+        display.textContent = number;
+    }
+}
+
+function clickNumberButton(number)
+{
+    displayNumber(number);
+}
+
+function clearOutput()
+{
+    display.textContent = "0";
+}
+
+function addEvents()
+{
+    // Numbers
+    for (let i = 0; i <= 9; i++)
+    {
+        const button = document.getElementById(i);
+        button.addEventListener("click", () => clickNumberButton(i));
+    }
+    document.getElementById("clear-button").addEventListener("click", clearOutput);
+}
+
 let num1, operator, num2;
+
+const display = document.querySelector(".output");
+
+addEvents();
