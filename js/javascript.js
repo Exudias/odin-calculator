@@ -54,10 +54,11 @@ function displayNumber(number)
 
 function clickNumberButton(number)
 {
-    if (operatorPressedLast)
+    if (!appendDigits)
     {
         displayNumber(number);
         operatorPressedLast = false;
+        appendDigits = true;
     }
     else
     {
@@ -68,6 +69,8 @@ function clickNumberButton(number)
 function reset()
 {
     display.textContent = "0";
+    appendDigits = false;
+    operatorPressedLast = false;
     num1 = num2 = operator = null;
 }
 
@@ -83,6 +86,7 @@ function onPressOperator(operatorPressed)
         num1 = getDisplayNumber();
     }
     operator = operatorPressed;
+    appendDigits = false;
     operatorPressedLast = true;
 }
 
@@ -99,6 +103,7 @@ function calculateAndDisplay()
     const result = operate(num1, operator, num2);
     displayNumber(result);
     num1 = operator = num2 = null;
+    appendDigits = false;
 }
 
 function addEvents()
@@ -122,5 +127,6 @@ let num1 = null, operator = null, num2 = null;
 const display = document.querySelector(".output");
 
 let operatorPressedLast = false;
+let appendDigits = false;
 
 addEvents();
