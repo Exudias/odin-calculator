@@ -149,6 +149,53 @@ function percentDisplay()
     appendDigits = false;
 }
 
+function onKeyPressed(e)
+{
+    const keyCode = e.code;
+    switch (keyCode)
+    {
+        case "KeyC":
+            reset();
+            break;
+        case "Slash":
+            onPressOperator("/");
+            break;
+        case "KeyX":
+            onPressOperator("x");
+            break;
+        case "Minus":
+            onPressOperator("-");
+            break;
+        case "Equal":
+            e.shiftKey ? onPressOperator("+") : calculateAndDisplay();
+            console.log(e.shiftKey);
+            break;
+        case "KeyD":
+            backspaceDisplay();
+            break;
+        case "Period":
+            onDecimalButton();
+            break;
+        case "KeyS":
+            sqrtDisplay();
+            break;
+        case "Digit5":
+            if (e.shiftKey) percentDisplay(); 
+            break;
+        case "Enter":
+            calculateAndDisplay();
+            break;
+        default:
+            break;
+    }
+    // Digits
+    if (!e.shiftKey && keyCode.startsWith("Digit"))
+    {
+        const number = +keyCode.slice(5);
+        clickNumberButton(number);
+    }
+}
+
 function addEvents()
 {
     // Numbers
@@ -169,7 +216,9 @@ function addEvents()
     document.getElementById("percent-button").addEventListener("click", percentDisplay);
     document.querySelector(".equals-button").addEventListener("click", calculateAndDisplay);
     // Resizing
-    window.addEventListener('resize', fitText, true);
+    window.addEventListener("resize", fitText, true);
+    // Input
+    window.addEventListener("keypress", onKeyPressed);
 }
 
 function fitText()
