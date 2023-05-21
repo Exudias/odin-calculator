@@ -168,6 +168,8 @@ function addEvents()
     document.getElementById("sqrt-button").addEventListener("click", sqrtDisplay);
     document.getElementById("percent-button").addEventListener("click", percentDisplay);
     document.querySelector(".equals-button").addEventListener("click", calculateAndDisplay);
+    // Resizing
+    window.addEventListener('resize', fitText, true);
 }
 
 function fitText()
