@@ -45,11 +45,13 @@ function addNumberToDisplay(number)
     {
         displayNumber(number);
     }
+    fitText()
 }
 
 function displayNumber(number)
 {
     display.textContent = number;
+    fitText()
 }
 
 function clickNumberButton(number)
@@ -68,7 +70,7 @@ function clickNumberButton(number)
 
 function reset()
 {
-    display.textContent = "0";
+    displayNumber(0);
     appendDigits = false;
     operatorPressedLast = false;
     num1 = num2 = operator = null;
@@ -106,6 +108,47 @@ function calculateAndDisplay()
     appendDigits = false;
 }
 
+function backspaceDisplay()
+{
+    let displayNumberString = getDisplayNumber().toString();
+    if (displayNumberString.length > 1)
+    {
+        displayNumber(displayNumberString.slice(0, -1));
+    }
+    else
+    {
+        displayNumber(0);
+    }
+}
+
+function onDecimalButton()
+{
+    let displayNumberString = getDisplayNumber().toString();
+    if (displayNumberString.includes(".")) return;
+    if (appendDigits)
+    {
+        displayNumber(displayNumberString + ".");
+    }
+    else
+    {
+        displayNumber("0.");
+        appendDigits = true;
+    }
+}
+
+function sqrtDisplay()
+{
+    let display = getDisplayNumber();
+    displayNumber(Math.sqrt(display));
+    appendDigits = false;
+}
+
+function percentDisplay()
+{
+    displayNumber(getDisplayNumber() / 100);
+    appendDigits = false;
+}
+
 function addEvents()
 {
     // Numbers
@@ -114,12 +157,51 @@ function addEvents()
         const button = document.getElementById(i);
         button.addEventListener("click", () => clickNumberButton(i));
     }
+    // Operators
     document.getElementById("clear-button").addEventListener("click", reset);
     document.getElementById("divide-button").addEventListener("click", () => onPressOperator("/"));
     document.getElementById("multiply-button").addEventListener("click", () => onPressOperator("x"));
     document.getElementById("subtract-button").addEventListener("click", () => onPressOperator("-"));
     document.getElementById("add-button").addEventListener("click", () => onPressOperator("+"));
+    document.getElementById("delete-button").addEventListener("click", backspaceDisplay);
+    document.getElementById("decimal-button").addEventListener("click", onDecimalButton);
+    document.getElementById("sqrt-button").addEventListener("click", sqrtDisplay);
+    document.getElementById("percent-button").addEventListener("click", percentDisplay);
     document.querySelector(".equals-button").addEventListener("click", calculateAndDisplay);
+}
+
+function fitText()
+{
+    const maxFontSize = 128;
+
+    let width = display.clientWidth;
+    let contentWidth = display.scrollWidth;
+    // get fontSize
+    let fontSize = parseInt(window.getComputedStyle(display, null).getPropertyValue('font-size'),10);
+    // if content's width is bigger then elements width - overflow
+    if (contentWidth > width)
+    {
+        fontSize = Math.ceil(fontSize * width / contentWidth, 10);
+        fontSize =  fontSize > maxFontSize ? fontSize = maxFontSize : fontSize - 1;
+        display.style.fontSize = fontSize+'px';   
+    }
+    else
+    {
+        // content is smaller then width... let's resize in 1 px until it fits 
+        while (contentWidth === width && fontSize < maxFontSize)
+        {
+            fontSize = Math.ceil(fontSize) + 1;
+            fontSize = fontSize > maxFontSize  ? fontSize = maxFontSize  : fontSize;
+            display.style.fontSize = fontSize + 'px';   
+            // update widths
+            width = display.clientWidth;
+            contentWidth = display.scrollWidth;
+            if (contentWidth > width)
+            {
+                display.style.fontSize = fontSize - 1 + 'px'; 
+            }
+        }
+    }
 }
 
 let num1 = null, operator = null, num2 = null;
@@ -130,3 +212,4 @@ let operatorPressedLast = false;
 let appendDigits = false;
 
 addEvents();
+fitText();
